@@ -1,37 +1,34 @@
-# Nom de notre workflow pour l'identifier facilement dans l'interface GitHub
 name: Deploy to GitHub Pages
 
-# Définit quand le workflow doit s'exécuter
 on:
   push:
     branches:
-      - main  # Se déclenche uniquement lors des pushs sur la branche main
+      - main
 
-# Définition des tâches à exécuter
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Utilise la dernière version d'Ubuntu
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Cette ligne est importante pour autoriser les mises à jour
     steps:
-      # Étape 1 : Récupère le code source
-      - uses: actions/checkout@v2
-      
-      # Étape 2 : Configure Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Utilise Node.js version 18
-          
-      # Étape 3 : Installe les dépendances
+          node-version: '18'
+          cache: 'npm'
+
       - name: Install dependencies
-        run: npm install
-        
-      # Étape 4 : Construit l'application
-      - name: Build
+        run: |
+          npm ci
+          
+      - name: Build application
         run: npm run build
-        
-      # Étape 5 : Déploie sur GitHub Pages
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Token généré automatiquement
-          publish_dir: ./out  # Dossier contenant les fichiers à déployer
+          folder: out  # Le dossier contenant les fichiers générés par Next.js
+          branch: gh-pages  # La branche où seront déployés les fichiers statiques
