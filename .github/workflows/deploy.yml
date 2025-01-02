@@ -1,0 +1,37 @@
+# Nom de notre workflow pour l'identifier facilement dans l'interface GitHub
+name: Deploy to GitHub Pages
+
+# Définit quand le workflow doit s'exécuter
+on:
+  push:
+    branches:
+      - main  # Se déclenche uniquement lors des pushs sur la branche main
+
+# Définition des tâches à exécuter
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Utilise la dernière version d'Ubuntu
+    steps:
+      # Étape 1 : Récupère le code source
+      - uses: actions/checkout@v2
+      
+      # Étape 2 : Configure Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'  # Utilise Node.js version 18
+          
+      # Étape 3 : Installe les dépendances
+      - name: Install dependencies
+        run: npm install
+        
+      # Étape 4 : Construit l'application
+      - name: Build
+        run: npm run build
+        
+      # Étape 5 : Déploie sur GitHub Pages
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Token généré automatiquement
+          publish_dir: ./out  # Dossier contenant les fichiers à déployer
