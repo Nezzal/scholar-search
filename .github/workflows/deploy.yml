@@ -27,6 +27,10 @@ jobs:
       - name: Build application
         run: npm run build
 
+      - name: Verify build output
+        run: |
+          ls -la out  # Vérifiez que le dossier 'out' contient les fichiers générés
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
