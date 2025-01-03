@@ -1,10 +1,10 @@
-echo "'use client';
+'use client';
 import SearchApp from '../components/SearchApp';
 
 export default function Home() {
   return (
-    <main className=\"min-h-screen bg-gray-50\">
+    <div>
       <SearchApp />
-    </main>
+    </div>
   );
-}" > src/app/page.tsx
+}
