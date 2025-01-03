@@ -35,4 +35,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: out  # Le dossier contenant les fichiers générés par Next.js
-          branch: gh-pages  # La branche où seront déployés les fichiers statiques
+          branch: main  # La branche où seront déployés les fichiers statiques
