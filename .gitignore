@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules/
+
+# Build directories
+.next/
+out/
+
+# Environment files
+.env.local
+
+# macOS files
+.DS_Store
+
+# IDE/Editor files
+.vscode/
+.idea/
