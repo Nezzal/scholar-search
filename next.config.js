@@ -1,10 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',  // Pour générer une version statique
-    basePath: '/scholar-search',  // Pour le bon fonctionnement sur GitHub Pages
-    images: {
-      unoptimized: true,  // Nécessaire pour le déploiement statique
-    },
+  output: 'export',
+  basePath: '/scholar-search',
+  images: {
+    unoptimized: true,
+  },
+  // Ensure your SerpAPI calls work in production
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://serpapi.com/:path*',
+      },
+    ];
   }
-  
-  module.exports = nextConfig
+};
+
+module.exports = nextConfig;
